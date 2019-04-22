@@ -1,0 +1,325 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% writeLaTeX Example: A quick guide to LaTeX
+%
+% Source: Dave Richeson (divisbyzero.com), Dickinson College
+% 
+% A one-size-fits-all LaTeX cheat sheet. Kept to two pages, so it 
+% can be printed (double-sided) on one piece of paper
+% 
+% Feel free to distribute this example, but please keep the referral
+% to divisbyzero.com
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% How to use writeLaTeX: 
+%
+% You edit the source code here on the left, and the preview on the
+% right shows you the result within a few seconds.
+%
+% Bookmark this page and share the URL with your co-authors. They can
+% edit at the same time!
+%
+% You can upload figures, bibliographies, custom classes and
+% styles using the files menu.
+%
+% If you're new to LaTeX, the wikibook is a great place to start:
+% http://en.wikibooks.org/wiki/LaTeX
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+                                
+\newcommand\todo[1]{\textcolor{red}{#1}}
+
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\theoremstyle{definition}
+\newtheorem*{question}{Question}
+\newtheorem{theorem}{Theorem}
+\newtheorem{defin}{Definition}
+\newtheorem{type}{Type}
+\theoremstyle{remark}
+\newtheorem*{remark}{Remark}
+
+
+% -----------------------------------------------------------------------
+
+\title{MATH 305 Cheatsheet}
+
+\begin{document}
+
+\raggedright
+\footnotesize
+
+\begin{center}
+     \Large{\textbf{MATH 305 Cheatsheet with \LaTeX}} \\
+\end{center}
+\begin{multicols}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\section{Summary}
+\subsection{Basic}
+1. Fundamentals of complex variable. Euler’s formula. Polar coordinate. Principal value of argument Arg (z)\\
+2. Arg (z) and arg (z). De Moivre’s formula. Roots of unit. Roots of a
+complex variable \\
+3. Complex exponential. Sets in the complex plane. Functions of complex
+variables \\
+4. Functions of complex variables. Image under linear and Mobius map $w = \frac{a+bz}{c+dz}$\\
+5. Image under $w = z^2$. Continuous, differentiable, analytic. Cauchy-Riemann equation\\
+6. Consequences of Cauchy-Riemann equation. Harmonic Functions. Conformal Mapping. Level Sets\\
+7. Laplace under analytical mappings. ∂z¯f (z) = 0. Conformal Mappings. \\
+8. Elementary functions $e^z$ and $sin z$. Images under $e^z$ and $sin z$ \\
+9. Properties of sin z and sinh z. Introduction of Log (z)\\
+10. Multi-valued functions. introduction of log z and Log (z) and their properties \\
+11. Multi-valued functions. Introduction of $z^\alpha$ and branch cuts \\
+12. Multi-valued functions. Branch cuts for $(z^2-1)^\frac{1}{2}$ \\
+13. Branch cuts for $(z^3-z)^{\frac{1}{2}}$, $(z^3-z)^{\frac{1}{3}}$, $(z^2+1)^{\frac{1}{2}}$ \\
+14. Inverse function of sin z. Solving Laplace equation with Arg (z) \\
+\subsection{Complex Integral Basics}
+15. Complex integrals. Contours (Paths) \\
+16. Fundamental Theorem of Calculus in the Complex Case. \\
+17. Cauchy-Coursat Theorem. simply-connected domains. Path independence and deformation of path \\
+18. Path Independence. Cauchy Integral Formula. \\
+19. Applications of Cauchy Integral Formula. Computation of real integrals \\
+20. Consequences of Cauchy Integral Formula. Functions with finite order 
+singularity \\
+21. Consequences of Cauchy Integral Formula. Liouville Theorem: bounded 
+entire functions are constants\\
+22. Maximum Modulus Principle \\
+23. Argument Principle, Nyquist Criterion \\
+24. Argument Principle, Nyquist criterion, applications to ODE \\
+25. Rouche’s Theorem. Classification of Singularities\\
+26. Classification of singularities and computations of residues\\
+27. Cauchy Residue Theorem. Computation of residues and contour integrals \\
+\subsection{Application}
+28. Applications of Cauchy Residue Theorem\\
+29. Type I, Type II real integrals\\
+30. Type III real integrals\\
+31. Type IV and Type V integrals. Integrals involving Multi-valued functions \\
+32. Type V integrals \\
+33. Fourier transforms and inverse Fourier transforms. Two Properties. 
+Applications to ODE and PDE\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Analytic}
+for f(z) = u + iv, if:
+\begin{itemize}
+    \item exist $u_x,u_y,v_x,v_y$ in D
+    \item $u_x,u_y,v_x_v_y$ are continuous in D
+    \item satisfy C-R equation in D
+\end{itemize}
+Then f(z) is analytic in D
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Harmonic}
+let $\Delta \phi = \partial^2_x \phi +  \partial^2_y \phi = 0$ for $\phi(x, y)$ and f(z) = u + iv, if f(z) is analytic, then u, v are harmonic.
+
+\textbf{Given function and its domain, find it's image.} \\
+Basic mapping example, given region and boundary, ask for harmonic function: 
+\begin{itemize}
+    \item washer: $Log|z|$
+    \item lines: Arg(z)
+\end{itemize}
+Solve it by observe that $f(z) = \alpha z + \beta$. 
+
+\begin{question}
+Find harmonic function u(x,y) in the right half plane, with the boundary condition of u(0, y) = 1 on $y \in (1, \infty)$, u(0, y) = 2 in $y \in (-\infty, 1)$
+\end{question}
+\section{Branch Cut}
+\begin{itemize}
+    \item break down the function with $e^log(f(z))$
+    \item separate argument part of the function.
+    \item choose branch cut for each section to meet the requirement domain.
+    \item check the initial value, if not meet, shift the whole branch cut by $2\pi$.
+    \item note that the correction could be in arugment or just shifting.
+\end{itemize}
+
+\begin{question}
+find a branch cut for $f(z) = (z(z+2)(z-3))^\frac{1}{2}$, so that it's analytic in C \ {$(-\infty,-2] \cup [0, 3]$} and f(-1) = 2.
+\end{question}
+
+\section{Image}
+\subsection{Cauchy-Riemann Equation}
+$$u_x = v_y, u_y = -u_x$$
+\begin{question}
+given imaginary part of f(z), and some initial value, find f(z)
+\end{question}
+
+\subsection{Multivalued function}
+$$sin^{-1}z = -iLog(iZ + \sqrt{1-z^2})$$
+
+
+\subsection{Confrontal Mapping}
+Given function, Mapping one domain to another. \\
+Find the transformation function to map given domain to another. 
+\begin{itemize}
+    \item shifting: $w = z + c$
+    \item rotation: $w = e^{i\theta} z$
+    \item mobius: $w = \frac{az+b}{cz+d}$, mapping from line or circle to itself or to each other.
+    \item $w = sin(z)$: strip to line. 
+    \item $w = log(z)$: circle to strip.
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Nyquist Criterion}
+Let N be the number of roots inside C, for P(z) are second order or higher taking the form $y^n + a_oy^(n-1)+ ... = 0$:
+\begin{align*}
+    N &= \frac{1}{2\pi}\int_C \frac{P'(z)}{P(z)}\\
+    N & = \frac{1}{2\pi}[argP(z)]|_c \\
+    N & = \frac{1}{2\pi}(n+\pi + 2[argP(z)]|_\Gamma_+) \\
+\end{align*}
+where $\Gamma_+$ is $0<y<\infty$, traverse downwards. \\ 
+\todo{$[argP(z)]|_c$ denote the change in the argument of P(z) over C. }
+\begin{itemize}
+    \item Find the degree pf poly as n.
+    \item Set up P(iy) and find the 
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Cauchy's theorem}
+
+
+\subsection{Laurent Series}
+keep this identity in mind: 
+\color{red}
+$$\frac{1}{1-z} = \sum^{\infty}_{j=0}z^j$$, if $|z|<1$
+\color{black}
+
+\begin{question}
+find Laurent series expansion for $\frac{1}{(z-2)z}$ in $0<|z|<2$ and $2<|z| < \infty$
+\end{question}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Residue Theorem}
+\begin{theorem}
+if f has an isolated singularity at point $z_0$, then the coefficient of $a_{-1}$ of $\frac{1}{z-z_0}$ in the Laurent expansion for f around $z_0$ is called the residue of f at $z_0$, denoted by $Res(z_0)$, where $\int_\Gamma f(z)dz = 2\pi i \cdot Res(z_0)$
+\end{theorem}
+Given condition P(z), Q(z) are analytic at $z_0$ and Q has a simple zero at $z_0$, $P(z_0) \neq 0$, we can use $Res(z_0) = \frac{P(z_0)}{Q'(z_0)}$
+
+
+\begin{defin}
+if f has a pole of order m at $z_0$, then:
+$$Res(z_0) = \lim_{z \rightarrow z_0} \frac{1}{(m-1)!}\frac{d^{m-1}}{dz^{m-1}}[(z-z_0)^mf(z)]$$
+This applies in general, always check the degree of the poles!
+\end{defin}
+
+\begin{theorem}
+\textbf{Cauchy's Residue Theorem}: if $\Gamma$ is a simple closed positively oriented contour, f is analytic inside and on $\Gamma$ except points $z_i$ inside $\Gamma$, then $\int_{\Gamma}f(z)dz = 2\pi i \sum^n_{j=1}Res(z_j)$ 
+\end{theorem}
+\todo{ALWAYS CHECK IF $z_i$ is inside $\Gamma$}
+
+\begin{type} Trigonometric \par
+Real integral of the form: $\int^{2\pi}_0 U(cos(\theta), sin(\theta))d\theta$. Replace $\theta$ with z get $\int_C U(\frac{1}{2}(z+\frac{1}{z}), \frac{1}{2i}(z-\frac{1}{z}))\cdot\frac{1}{iz} dz$
+\end{type}
+
+\begin{question}
+$I = \int^\pi_0 \frac{d\theta}{2 - cos(\theta)}$
+\end{question}
+
+\begin{type} Improper \par
+If $f(z) = \frac{P(z)}{Q(z)}$ such that degree Q $\geq$ 2 + degree P, then $$\lim_{p \rightarrow  \infty} \int_{C_p^+} f(z)dz = 0$$, where $C^+_p is the upper half-circle of radius p.$
+\end{type}
+
+\begin{question}
+$I = \int^\infty_{-\infty} \frac{x^2}{(x^2 + 1)^2}$
+\end{question}
+
+\begin{type} improper Trigonometric \par
+Real integrals of the form $I = \int^\infty_{-\infty} \frac{P(x)}{Q(x)}cos(mx) dx $ or $I = \int^\infty_{-\infty} \frac{P(x)}{Q(x)} sin(mx) dx or I = \int^\infty_{-\infty} \frac{P(x)}{Q(x)} e^{imx} dx $, where Q(x) are 2 degrees higher than P(x).
+\end{type}
+\begin{remark}
+\todo{Q(x) and P(x) are both defined and continuous over the interval!}
+\end{remark}
+
+\begin{theorem} Jordan's Lemma \par
+if n $>$ 0  and P/Q is the quotient of two polynomials such that degree Q $\geq$ 1 + degree P, then $$\lim_{p \rightarrow \infty} \int_{C^+_p} e^{imz} \frac{P(z)}{Q(z)} dz = 0$$, where $C^+_p$ is the upper half-circle of radius p. 
+\end{theorem}
+
+\begin{remark}
+The proof of this theorem uses a limiting method to bound sin(t) by $\frac{2t}{\pi}$ between (0, $\frac{\pi}{2}$), then 
+\end{remark}
+
+\begin{question}
+$I = \int^\infty_{-\infty} \frac{e^{ix}x}{x^2+1} dx$
+\end{question}
+
+\begin{remark}
+Also, if there is only cos(x) or sin(x), think of it as the Re(f(z)) or Im(f(z))
+\end{remark}
+
+\todo{When doing half circle, be careful with the direction of the contour}
+
+
+\begin{type} Indented contour \par
+If f has a simple pole at z = c and $T_r$ is the circular arc defined by $T_r: z = c + re^{i\theta}, {\theta_1 \leq \theta \leq \theta2}$. Then $$\lim_{r \rightarrow 0^+} \int_{T_r} f(z) dz = i (\theta_2 -\theta_1) Res(f;c)$$, where positive orientation is counterclockwise. 
+\end{type}
+\begin{question}
+$I = \int^\infty_{-\infty} \frac{e^{ix}x}{x^2-1} dx$
+\end{question}
+
+\begin{type} Multiple-Valued \par
+When f(z) includes a multi-valued function, we break $ f(z ) \rightarrow e^{\alpha Log(x)}$ and create a $\gamma_1, \gamma_2$ contour on the branch cut, then create closed contour to calculate the two contour, based on $$\int_\Gamma f(z) dz = 2\pi i \cdot \sum(residue of f at poles inside \Gamma)$$  
+\end{type}
+
+\begin{question}
+$I = \int^\infty_0 \frac{dx}{x^\lambda(x-4)}, here 0 < \lambda < 1$
+\end{question}
+
+\begin{remark}
+\todo{Note that the inner circle has a different direction!}
+\end{remark}
+
+\section{Transformation}
+\subsection{Use Fourier to solve ODE}
+\begin{itemize}
+    \item Take first order ODE and replace x with $i\omegat$ to get the homogeneous equation, and the equivalent g(t) using fourier transformation $g_f(w) = \frac{1}{2\pi}\int^\infty_{-\infty}g(t)e^{-i\omega t}dt$ 
+    \item get $f(w)$ and transform back to $f(t)$ with $f(t) = \frac{1}{2\pi}\int^\infty_{-\infty}f_f(w)e^{-i\omega t}dw$
+\end{itemize}
+
+
+
+\section{Miscs}
+
+
+
+\end{multicols}
+
+\end{document}

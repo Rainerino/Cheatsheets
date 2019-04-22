@@ -1,0 +1,379 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% writeLaTeX Example: A quick guide to LaTeX
+%
+% Source: Dave Richeson (divisbyzero.com), Dickinson College
+% 
+% A one-size-fits-all LaTeX cheat sheet. Kept to two pages, so it 
+% can be printed (double-sided) on one piece of paper
+% 
+% Feel free to distribute this example, but please keep the referral
+% to divisbyzero.com
+% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% How to use writeLaTeX: 
+%
+% You edit the source code here on the left, and the preview on the
+% right shows you the result within a few seconds.
+%
+% Bookmark this page and share the URL with your co-authors. They can
+% edit at the same time!
+%
+% You can upload figures, bibliographies, custom classes and
+% styles using the files menu.
+%
+% If you're new to LaTeX, the wikibook is a great place to start:
+% http://en.wikibooks.org/wiki/LaTeX
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[10pt,landscape]{article}
+\usepackage{amssymb,amsmath,amsthm,amsfonts}
+\usepackage{multicol,multirow}
+\usepackage{calc}
+\usepackage{ifthen}
+\usepackage[landscape]{geometry}
+\usepackage[colorlinks=true,citecolor=blue,linkcolor=blue]{hyperref}
+
+
+\ifthenelse{\lengthtest { \paperwidth = 11in}}
+    { \geometry{top=.5in,left=.5in,right=.5in,bottom=.5in} }
+	{\ifthenelse{ \lengthtest{ \paperwidth = 297mm}}
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+		{\geometry{top=1cm,left=1cm,right=1cm,bottom=1cm} }
+	}
+\pagestyle{empty}
+\makeatletter
+\renewcommand{\section}{\@startsection{section}{1}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%x
+                                {\normalfont\large\bfseries}}
+\renewcommand{\subsection}{\@startsection{subsection}{2}{0mm}%
+                                {-1explus -.5ex minus -.2ex}%
+                                {0.5ex plus .2ex}%
+                                {\normalfont\normalsize\bfseries}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{3}{0mm}%
+                                {-1ex plus -.5ex minus -.2ex}%
+                                {1ex plus .2ex}%
+                                {\normalfont\small\bfseries}}
+                                
+\newcommand\todo[1]{\textcolor{red}{#1}}
+% for verilog                 
+\usepackage{xcolor}
+\usepackage{listings}
+\definecolor{vgreen}{RGB}{104,180,104}
+\definecolor{vblue}{RGB}{49,49,255}
+\definecolor{vorange}{RGB}{255,143,102}
+
+\lstdefinestyle{verilog-style}
+{
+    language=Verilog,
+    basicstyle=\small\ttfamily,
+    keywordstyle=\color{vblue},
+    identifierstyle=\color{black},
+    commentstyle=\color{vgreen},
+    numbers=left,
+    numberstyle=\tiny\color{black},
+    numbersep=10pt,
+    tabsize=8,
+    moredelim=*[s][\colorIndex]{[}{]},
+    literate=*{:}{:}1
+}
+
+\makeatletter
+\newcommand*\@lbracket{[}
+\newcommand*\@rbracket{]}
+\newcommand*\@colon{:}
+\newcommand*\colorIndex{%
+    \edef\@temp{\the\lst@token}%
+    \ifx\@temp\@lbracket \color{black}%
+    \else\ifx\@temp\@rbracket \color{black}%
+    \else\ifx\@temp\@colon \color{black}%
+    \else \color{vorange}%
+    \fi\fi\fi
+}
+% for verilog  
+
+\makeatother
+\setcounter{secnumdepth}{0}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt plus 0.5ex}
+
+\theoremstyle{definition}
+\newtheorem*{question}{Question}
+
+% -----------------------------------------------------------------------
+
+\title{CPEN 311 Cheatsheet}
+
+\begin{document}
+
+\raggedright
+\footnotesize
+
+\begin{center}
+     \Large{\textbf{CPEN 311 Cheatsheet with \LaTeX}} \\
+\end{center}
+\begin{multicols}{3}
+\setlength{\premulticols}{1pt}
+\setlength{\postmulticols}{1pt}
+\setlength{\multicolsep}{1pt}
+\setlength{\columnsep}{2pt}
+
+\section{Overview}
+\href{https://drive.google.com/file/d/1k1Rh2W6b5lyQG8Z9oOSLiHAjXUh_RqHa/view}{Course summarize slides} \\
+all the topics: System verilog, combinational and sequential logic modeling, circit timing, fsm design, glitches, modular design with FPGA, start-finish protocol, metastability, synchronizers, clock domain, design of microprocessors, arithmetic circuits, fixed/float point, pipelining, LFSR, clock skew, Altera Qsys/Nios, Digital frequency synthesis, PLLs, Digital Signal processing,(DSP), Power analysis, high speed differential signaling and transceivers. \\
+
+
+\section{System verilog}
+FPGA: field programmable gate array, has configurable logic block and IO bloks, with programmable interconnect. Each Logic blockk has Look up table(LUT). See \textbf{p1}. With the Flip-flop and Mux, we can make the lgoic block into a ff reg, with one of the signals as data (since it can only take one). \\
+\begin{question}
+Asking for using logic block to implement a circuit. Keep in mind that a LUT only has limited input signal width. 
+\end{question}
+
+FPGA design flow: deisgn $\rightarrow$ synthesis and behavioral simulation $\rightarrow$ implementation (done by Quartus) using Translate, map and place + routing $\rightarrow$ timing analysis. \\
+
+\subsection{System verilog Syntext}
+\begin{enumerate}
+    \item no name start with numbers
+    \item bitwise operation and, not
+    \item order of operations: Highest: $not, arithmic, <<, <<<, etc, ? :$ Lowest
+    \item unsized variable will be 32 bits
+    \item floating output: ? 4'b1 : 4'bz
+    \item delays in the code will be ignored in sythesis. 
+\end{enumerate}
+\textbf{Async reset, Async reset + enable at p2}\\
+What is latch and why we should avoid it: ff only changes output in response to a clock edge, whereas a latchcan change output in response to other things. in FPGA, we want ff to be clocked froma single clock source to preserve timing error. With Latch, glitches can happen where output is unstable before settle. \\
+
+\textbf{Blocking vs non-blocking}: $<=$ will occurs simultaneously with others, where = appears in order as the code. \\
+\textbf{Generate}: for multiple mux
+\begin{lstlisting}[style={verilog-style}]
+genvar i;
+generate 
+    for (i = 0; i < 4; i = i + 1) 
+        begin: big_mux
+        if (i > 2)
+            mux_4_tol mux (W[4 * i], 
+            W[4*i + 1], W[4*i + 2], 
+            W[4*i + 3], S[1:0], M[]i]);
+        else
+            mux_4_tol mux (W[4 * i], 
+            W[4*i + 1], W[4*i + 2], 
+            W[4*i + 3], S[1:0], M[]i]);
+    end
+endgenerate
+\end{lstlisting}
+
+\textbf{parameter}
+\begin{lstlisting}[style={verilog-style}]
+module mux2 #(parameter width = 8) 
+(input ... output) begin
+    assign ...
+end
+mux2 #(8) mux();
+\end{lstlisting}
+Two golden rules for syntheisable verilog: 
+\begin{enumerate}
+    \item comb use $always_comb$ to include all used signals, and use default for case statement.
+    \item seq use $always_ff$. Only one signal in each always block, since they will be executed in parallel. Use non blocking assignment for sequential logic. 
+\end{enumerate}
+
+
+
+
+
+% finished slides
+\section{Circuit timing Basics}
+fan-out: number of gates driven \\
+delay of a gate: $\sim R \cdot C$, where R and C depends on size f transitors and length of wire.\\
+gate delay: time takes for CL gate output change after input changes.  \\
+path delay: delay through a series of CL
+critical path: path of the longest delay, which determines the worst time delay of a circuit $t_{clock_min} \geq t_{critical path}$ \\
+clock shew: clock doesn't arrive at all ff at the same time. We need to avoid it as it caused both design and functional problem(in run time), by redesign the layout, use global clock only needed to and create local clock if needed (they are more prone to clock shew). In general has as little clock as possible. \\
+\subsection{FF timing constraints}
+\textbf{clock-to-q delay}: time for output to settle after the clock posedge\\
+\textbf{set up time}: time that input needs to hold for before clock posedge. time it takes for ff to "set up" its value from input before clock arrive, therefore input has to be the same.\\
+\textbf{hold time}: time that input to FF cannot change after the clock changes. time that the input has to "hold" to fully read the input after clocked, before input will be taken away. \\
+\textbf{see p5} for a detailed cycle. \\
+
+\subsection{FF timing requirement}
+\textbf{setup req}: $t_{clk} \geq t_{c_to_q max} + t_{critical path} + t_{setup}$, before clock arrive, ff needs to take the input, CP is settled and all previous input already stabled in the output. Can be fixed by slowing down the clock or adding more ff. \\
+\textbf{hold req}: $t_{c_to_q min} + t_{path} \geq t_{hold}$, the fast circuit cannot be too fast that the input changed during hold time. Can be fixed by add more gate delays. \\
+If we take clock shew into consideration, need to add a delay to $t_{clk}$ and reconsider the $t_{new_clk}$, if if the clk speed is increased or decreased. \\
+
+\subsection{Pipeline}
+to reduce critical path and balance the fast path, we can add a pipeline stage (ff on each lines).
+\begin{enumerate}
+    \item if CP is really long.
+    \item we want to read some data on the fly. 
+    \item each pipeline statege add overhead of $t_{setup} + t_{c_to_q}$
+    \item each cycle will behave differently.
+\end{enumerate}
+
+\subsection{Glitch}
+\textbf{an undesired short lived pulse that occurs before a signal settles to its intended value.}, could be caused by unequal arrival time of inputs on CL gates \textbf{see p6}
+
+\section{FSM designs}
+
+\subsection{FPGA vs ASIC}
+\textbf{fpga} pros: higher parallelism, more flexible, faster development cycle, high perfromance, reusuable hw. \\
+cons: more expensive, less energy efficient, need HDL knowledge \\
+\textbf{asic} pros: speed, reduce power consumption, cost/performance ratio \\
+cons: large and long development cost and cycle, inflexibility.  \\
+
+\subsection{FSM vs microprocessors}
+processor adv: slower, sequential execution, better for complex flow and large FSM, easier to change. fsm: faster and parallel execution, difficult to make chagnes. 
+
+
+
+
+\section{Metastability, synchronizers, clock domain}
+\subsection{Clock Shew and Clock Domains}
+\textbf{Hazards}: at transient period(signal may fluctuate). static hazard: glitch when the signal should be stable, dynamic hazard a glitch in transition. We can handle it by retrieve data until it's stable, or use a clock to sample and store stable value. 
+\textbf{Metastability}: Mean time between synchronization failures(MTBF) $MTBF(t_{slack}) = \frac{e^ \frac{t_{slack}}{\tau}}{w \cdot f_{clk} \cdot f_{data}}$, where $f_{data}$ is the toggle freq of ff input, $t_{slack} $ is the amount of slack available on the path for metastability resolution. We want high MTBF, so that the system will statistically less likely to fail in comparison. 
+\todo{Need to review this with slides 7c} \\
+\begin{question}
+Given these values and calculate MTBF, also add ff to circuit and ask what will change etc
+\end{question}
+
+\subsection{Synchronizers}
+Use ff to prevent metastability. 
+edge detector:
+\begin{lstlisting}[style={verilog-style}]
+module pos_edge_det ( input sig,
+                      input clk,           
+                      output pe);          
+    reg   sig_dly;                          
+    always @ (posedge clk) begin
+        sig_dly <= sig;
+    end
+    assign pe = sig & ~sig_dly;            
+endmodule 
+\end{lstlisting}
+\todo{Need to review more on synch, clock domain crossing modules, slow to fast and fast to slow ones!}
+
+\section{Linear Feedback Shift Registers}
+shift register with feedbacks with XOR gate, and can be used to generate pseudo random sequences. \textbf{see p7} \\
+CRD(cyclic redundary check): LFSR on the LSB and MSB, shift into LSB. 
+
+
+
+
+
+
+% finished slides
+\section{Power estimation}
+\textbf{two types}: dynamic power: energy leak when switch state. static power: energy leaked by transistors. \\
+$P_{dyna} = \alpha \cdot f \cdot C \cdot V^2$, where f is the freq, C is capacitane of wire, V is the voltage. \\
+statistical method: find the probability of state changes based on each gates, given random inputs. \\
+reduce power consumption: 
+\begin{enumerate}
+    \item lower voltage
+    \item reduce area (smaller hardware)
+    \item improve alg and reduce gates complexity
+    \item use pipeline to avoid glitch. care for the trade off with static power. 
+\end{enumerate}
+
+% stopped at page 60
+\section{Digital Signal processing}
+\textbf{def}: signal processing by digital means. Take an noisy analog signal and modify it in the digital domain, then output the more clear signal back to analog domain. \\
+\textbf{adv for digital}: programmablity, repeatability, avoid parasitic effects, cheaper, higher performance. \textbf{drawback}: not in real time! \\
+
+\subsection{fixed point and floating point}
+\textbf{fixed point}: 2's complement integer format and use integer arithmetic. The location of radix is fixed, and determine the range and precision. ex: 7.5 is 01111000 in 4 fraction bits. \\
+\textbf{2's complement}: invert all bits and add 1 to change positive to negative. 
+\textbf{floating point}: use mantissa. $M x B^E$, where M is the mantissa, B is the base (usually 2 for bits), E is the exponent. Therefore the radix is floating. The first bit of M is always 1! \textbf{see p8} for example.  \href{https://drive.google.com/file/d/0By2-dmbuBCMTck1LUnp6Nzd2YW8/view}{see how to operate with floating point} \\
+pro of fixed: cheaper, less power consuming. 
+con of fixed: limited range, harder to program
+adv of float: higher accuracy, easier to program, higher range
+con of float: larger hw and more power consuming. 
+
+
+% stopped at page 33, nt sure WTF is going on anymore
+\section{Direct digital synthesis(DDS)}
+\textbf{def}: a digital technique for generating a sine wave from a fixed-frequency clock source.\\
+To create a clock synced to the phase change with tunning word M: $F_{out} = M \cdot \frac{F_{clk}}{2^n}$. (careful with clk(in period of time) to $frequency = \frac{1}{T}$) \textbf{see p4}. Basic components are: phase accumulator,phase 2 amplitide convertor, DAC \\ 
+\textbf{adv of dds}: freq, phase is digitally tunable. Less influence from circuit aging. 
+\textbf{restriction}: 
+\begin{enumerate}
+    \item $F_{out} <= \frac{1}{2}F_{clk}$, $M < 2^{n-1}$
+    \item amplitude is fixed.
+\end{enumerate}
+
+
+% some basic digital analog convertion hardware
+\section{DAC and ADC}
+\textbf{Digital to analog}: summing clean(gated) digital data to analog signals with a weighted sum amplifier and R-2R network DAC. \textbf{Methods}: pulse-width modulator(low pass filter), binary weighted(op and 2R-R network), successive approx(compartor). \\
+\textbf{Analog to digitial}: compare the value of analog signal to determine the "on and off" status of digital output. \textbf{Methods}: digital-ramp, successive approx, flash.\\
+
+% For the last part of the lecture. Stop at about page 20, the rest was just confusing as hell.
+\section{Transceivers}
+\textbf{System synchronous}: communication between two ICs where a common block is applied to both ICs and is used for data transmission and reception. \\
+
+problem: although the common block will have its own clock to guard timing violation, during high speed data tranmission, this delay cannot be bypassed. \\
+
+\textbf{Source Synchronous(clock forwarded)}: communication between two ICs where the transmitting IC generates a clock that accompanies the data. The receiving IC uses this forward clock for data reception. \\
+
+problem: Although it's faster, by having different clock for data(faster with fast clock, slow ones with slow clock), if the strobe(clcok crated by transitting party) is not synced to the receving end, a sync module has to be added and thus with multiple clock domains, added complexity. \\
+
+\textbf{Self-synchronous}: communication between two ICs where the transmitting IC generates a stream that contrains both the data and the clock. \textbf{see p3} \\
+
+\textbf{PLL(phase locked loop}: a circuit that takes a reference clock and async signal, output a clock that is synced with that signal. \\
+
+Differential Signaling: two gate where one if them is not-ed. \\
+
+\textbf{Multigigabit transceivers} (MGTs): receives parallel data and allows transportation of high bandwidth data over a serial link. adv: result in lower system cost, smaller and cheaper packages and less pins. disadv: careful layout of traces are needed, need impedance control and termination of the chip. \\
+
+\textbf{Transmission Impairment}:\\
+attenuation: gradal loss in intensity of flux such as radio waves\\
+distortion: different phase shifts may distort the shape of composite signals\\
+interference: add unwanted signals to desired signals\\
+noise: a random fluctuation of an analog signal. \\
+
+\textbf{preemphasis and equalization}
+preemphasis: anticipates which part of the signal will be attenuated/distored most and applies the reverse gain/distortion. Applied at the output of the transceiver. 
+equalization: adaptive filtering at the recevier which tried to estimate the medium's channel impluse response and convolve the inupt signal with an inverse filter that neutralize the medium's distortion and attenuation. Applied at the input to transceiver. \\
+
+\textbf{Line coding and block coding}
+\textbf{line coding}: transmit the data efficient through the transmission medium to facilitate reception by the receiver. Must take into account the freq response. FPGA use $Non-return-to-zero$(NRZ). \\
+adv of line coding: always take the medium pass through into account. \\
+bandwidth of line coding: NRZ: N/2, bipolar RZ: N, manchester: N, AMI: N/2 \\
+
+\textbf{block coding}:  operates on a block of bits, using a preset alg, we take a group of bits and add a coded part to make a larger block, then its checked at the receiver, which will make a decision about the validity f the received sequence. It takes a m bits into a block of n bits, where n is larger than m. It's referenced to as mB/nB encoding. We use it to ensure data is relative random and does not include long sequence of 1s or 0s. \\
+
+\textbf{Self-sync}: some line coding scheme embeds bit interal information, and it can help receive sync its clock with the transmitter clock, .
+\textbf{Eye diagram}
+see p9. 
+
+
+
+
+
+\section{Miscs}
+
+\section{Questions from last year}
+\begin{enumerate}
+    \item take a flow diagram and convert it into a state machine. \\
+        \begin{enumerate}
+            \item materials from Lecture 4a, HW2, and lab 2, 4
+            \item $trap_edge()$ module are from HW1 last question. 
+            \item review the state machine design methods
+        \end{enumerate}
+    \item timing aalysis question \\
+        \begin{enumerate}
+            \item Check practice assignment 3 and 6
+            \item checkk question 1 in practice assignemtn 3
+        \end{enumerate}
+    \item running disparity and preemphasis/equalization
+        \begin{enumerate}
+            \item Explain these concepts
+            \item BPSK circuit review
+        \end{enumerate}
+    \item the different in floating point implementation and fixed point implementation
+    \item Checkout the two final exam from last year:             \hyperlink{https://sites.google.com/site/ubccpen311winter2018term2/exam}{exam link} \\
+    \item will have one timing analysis question, one state machine design and analysis         question, a question on piplining(similar to in class), multiple short answers about     basic knowledge of \textbf{\emph{DDS, transceivers, LFSRs and DSP} }. Basic concepts about running disparity and preemphasis/equalization
+    
+\end{enumerate}
+
+\end{multicols}
+
+\end{document}
