@@ -44,6 +44,7 @@
 
 \theoremstyle{definition}
 \newtheorem*{question}{Question}
+\newtheorem*{method}{Method}
 \newtheorem{theorem}{Theorem}
 \newtheorem{defin}{Definition}
 \newtheorem{type}{Type}
@@ -163,6 +164,9 @@ Transform function to $$\mathcal{L}y = (x-x_0)^2y'' + \alpha(x) (x-x_0)y' + \bet
 $$\Delta u = \frac{\partial u^2}{\partial^2 t} + \frac{\partial u^2}{\partial^2 x}  = 0$$
 
 \subsection{Types}
+\textbf{Infinite Bound}
+Let u(x) = w(x, t) + v(x). Solve for both with the usual way. 
+
 \subsubsection{Circle}
  Laplace: Transform to polar coordinate \\
 $u_{xx} + u_{yy} = U_{rr} + \cfrac{1}{r}U_r + \cfrac{1}{r^2}U_{\theta \theta} = 0$\\
@@ -185,7 +189,11 @@ r = (x^2+y^2)^\frac{1}{2} \\
 
 
 \begin{itemize}[noitemsep,nolistsep]
-    \item Wedge with hole: on top of wedge, some edge $u(b, \theta)$ is also defined.  $u(r,0)=c_1, \; u(r, \alpha) = c_2 \; u(b, \theta) = 0$, $u(r, \theta)$ bounded as $r \rightarrow 0, u(\alpha, \theta) = f(\theta)$ 
+    \item Wedge with hole: on top of wedge, some edge $u(b, \theta)$ is also defined.  $u(r,0)=c_1, \; u(r, \alpha) = c_2 \; u(b, \theta) = 0$, $u(r, \theta)$ bounded as $r \rightarrow 0, u(\alpha, \theta) = f(\theta)$  
+    \begin{method}
+    
+    \end{method}
+    
     \item Dirichlet on the interior of circle: $u(a, \theta) = f(\theta)$, as $r \rightarrow 0, \; u(r, \theta) < \infty$ and periodic: $u(r, \theta) = u(r, \theta + 2\pi)$
     \item Dirichlet on the exterior of circle: $u(a, \theta) = f(\theta)$, as $r \rightarrow \infty, \; u(r, \theta) < \infty$ and periodic: $u(r, \theta) = u(r, \theta + 2\pi)$
 \end{itemize}
@@ -207,11 +215,22 @@ $$\mathcal{L} = \lambda ry = -(py')' + qy$$
 $$\alpha_1 y(0) + \alpha_2 y'(0) = 0 \; \beta_1 y(\ell) + \beta_2 y'(\ell) = 0$$
 $$p(x) > 0, r(x) >0$$
 \end{defin}
+find $\mu = \frac{e^{\int \frac{Q}{P}}}{P}$
 
 \textbf{Properties}
 \begin{itemize} [noitemsep,nolistsep]
     \item $\int^{\ell}_0 r(x) \phi^2_j (x) \mathrm{d}x = 1$
+    \item if $f(x) = \sum^{\infty}_{n=1}c_n\phi_n(x)$, then 
+    $$c_n = \frac{\int^b_af(x)\phi_n(x)r(x)dx}{\int^b_a\phi^2_n(x)r(x)dx}$$
 \end{itemize}
+
+\begin{question}
+\begin{itemize}
+    \item Ask for transform equations to S-L form. Compute all eigenvalue and eigenfunctions.
+    \item USe the above to solve another PDE system. 
+\end{itemize}
+
+\end{question}
 
 \subsection{Robin Boundary Condition}
 \begin{align*}
